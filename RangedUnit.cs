@@ -15,7 +15,7 @@ namespace C_2_Lessons
             if ((float)Random.Shared.NextDouble() > Accuracy) return;
             base.Attack(unit);
         }
-        public RangedUnit(int damage, int hp, float accuracy) : base(damage, hp)
+        public RangedUnit(int damage, int hp, float accuracy) : base(new Dice(1,20,damage), hp)
         {
             Accuracy = accuracy;
         }

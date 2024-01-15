@@ -12,10 +12,10 @@ namespace C_2_Lessons
         protected override void Defend(Unit unit)
         {
 
-            if (Random.Shared.NextDouble() < (double)ParryChance) HP -= unit.Damage / 2; 
+            if (Random.Shared.NextDouble() < (double)ParryChance) HP -= unit.Damage.Roll() / 2; 
             else base.Defend(unit);
         }
-        public MelleeUnit(int damage, int hp,float parryChance) : base(damage, hp)
+        public MelleeUnit(int damage, int hp,float parryChance) : base(new Dice(1, 20, damage), hp)
         {
             ParryChance = parryChance;
         }

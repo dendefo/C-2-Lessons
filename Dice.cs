@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace C_2_Lessons
 {
-    internal struct Dice
+    public struct Dice
     {
         public uint Scalar { get; private set; } // controls how many die will roll
         public uint BaseDie { get; private set; } // controls the type of die rolled
@@ -17,6 +17,10 @@ namespace C_2_Lessons
         {
             Scalar = scalar;
             BaseDie = baseDie;
+            Modifier = modifier;
+        }
+        public void ChangeModifier(int modifier)
+        {
             Modifier = modifier;
         }
 

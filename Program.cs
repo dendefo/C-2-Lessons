@@ -4,17 +4,39 @@
     {
         public static int[] games = new int[9];
         public static int[] wins = new int[9];
+
+        static void Main(string[] args)
+        {
+            BattleBetweenTrainers();
+        }
+
+        static void BattleBetweenTrainers()
+        {
+            Weather weather = new Weather();
+            float weatherChangeChance = 0.3f;
+            Trainer inTheRedCorner = new(Races.Human, 5);
+            Trainer inTheBlueCorner = new(Races.Dwarf, 5);
+            while (!inTheRedCorner.isDead && !inTheBlueCorner.isDead)
+            {
+                inTheBlueCorner.Attack(inTheRedCorner);
+                if (inTheRedCorner.isDead) break;
+                inTheRedCorner.Attack(inTheBlueCorner);
+                if (Random.Shared.NextDouble()<weatherChangeChance)
+                {
+                    weather++;
+                    inTheBlueCorner.Units.ForEach(unit => unit.WeatherEffect++);
+                    inTheRedCorner.Units.ForEach(unit=> unit.WeatherEffect++);
+                }
+            }
+            if (inTheRedCorner.isDead) Console.WriteLine("The Winner is Blue!");
+            else Console.WriteLine("The Winner is Red!");
+
+        }
         /// <summary>
         /// A little battle simulation of units fighting each other in random pairs. Shows which class is in meta rn.
         /// </summary>
         /// <param name="args"></param>
-        static void Main(string[] args)
-        {
-            Dice dice = new Dice(2, 6, -1);
-            Console.WriteLine(dice.Roll());
-            Console.WriteLine(dice);
-        }
-        private void Simulate()
+        static void SimulateOld()
         {
             for (int i = 0; i < 1000000; i++)
             {
