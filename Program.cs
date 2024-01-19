@@ -5,6 +5,11 @@
 
         static void Main(string[] args)
         {
+            
+            Circle triangle = new(5,5,10);
+            Console.WriteLine(triangle);
+
+            
         }
     }
 }
