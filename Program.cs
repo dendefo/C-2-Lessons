@@ -6,10 +6,10 @@
         static void Main(string[] args)
         {
             
-            Circle triangle = new(5,5,15);
-            Console.WriteLine(triangle);
+            Circle circle = new(5,5,19.7f);
+            Console.WriteLine(circle);
 
-            
+
         }
     }
 }

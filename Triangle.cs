@@ -9,48 +9,48 @@ namespace C_2_Lessons
     /// <summary>
     /// Side of the triangle that lies opposite to angle has same letter in name
     /// </summary>
-    internal class Triangle : Shape
+    sealed internal class Triangle : Shape
     {
-        public float side_a { get; private set; }
-        public float side_b { get; private set; }
-        public float side_c { get; private set; }
-        public float angleCAB { get; private set; }
-        public float angleABC { get; private set; }
-        public float angleBCA { get; private set; }
+        public float Side_a { get; private set; }
+        public float Side_b { get; private set; }
+        public float Side_c { get; private set; }
+        public float AngleCAB { get; private set; }
+        public float AngleABC { get; private set; }
+        public float AngleBCA { get; private set; }
         public Triangle(float positionX, float positionY, float heightFromBAC, float side_a, float angleABC) : base(positionX, positionY, side_a, heightFromBAC)
         {
             //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHH
             //Fuck triangles (but i respect them)
             //Fuck trigonometry (respect it as well)
 
-            this.side_a = side_a;
-            this.angleABC = angleABC;
+            this.Side_a = side_a;
+            this.AngleABC = angleABC;
             var tanABC = MathF.Tan(angleABC);
             var partOf_a = heightFromBAC / tanABC;
             var anotherPartOf_a = side_a - partOf_a;
-            this.angleBCA = MathF.Atan(heightFromBAC / anotherPartOf_a);
-            side_b = heightFromBAC / MathF.Sin(angleBCA);
-            side_c = heightFromBAC / MathF.Sin(angleABC);
-            angleCAB = 180 - angleABC - angleBCA;
-            if (angleBCA <= 0 || angleABC <= 0 || angleCAB <= 0) throw new Exception("Something in the data is wrong, angles are negative");
-            if (side_a + side_b <= side_c || side_a + side_c <= side_b || side_b + side_c <= side_a) throw new Exception("Something in the data is wrong, this triangle can't exist");
+            this.AngleBCA = MathF.Atan(heightFromBAC / anotherPartOf_a);
+            Side_b = heightFromBAC / MathF.Sin(AngleBCA);
+            Side_c = heightFromBAC / MathF.Sin(angleABC);
+            AngleCAB = 180 - angleABC - AngleBCA;
+            if (AngleBCA <= 0 || angleABC <= 0 || AngleCAB <= 0) throw new Exception("Something in the data is wrong, angles are negative");
+            if (side_a + Side_b <= Side_c || side_a + Side_c <= Side_b || Side_b + Side_c <= side_a) throw new Exception("Something in the data is wrong, this triangle can't exist");
 
 
         }
 
         public override float Area()
         {
-            return Height * side_a / 2;
+            return Height * Side_a / 2;
         }
 
         public override float Perimeter()
         {
-            return side_a + side_b + side_c;
+            return Side_a + Side_b + Side_c;
         }
         public override bool Equals(object? obj)
         {
             if (obj == null) return false;
-            if (obj is Triangle t) return side_a == t.side_a && side_b == t.side_b && side_c == t.side_c;
+            if (obj is Triangle t) return Side_a == t.Side_a && Side_b == t.Side_b && Side_c == t.Side_c;
             return false;
         }
 
@@ -61,6 +61,16 @@ namespace C_2_Lessons
         public override string ToString()
         {
             return base.ToString();
+        }
+
+        /// <summary>
+        /// Does it meaningful?
+        /// For me it was very meaningful
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return (int)(AngleABC * AngleABC * AngleBCA * AngleBCA * AngleBCA * PositionX * PositionY*287361);
         }
     }
 }
