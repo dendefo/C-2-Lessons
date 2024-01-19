@@ -23,6 +23,10 @@ namespace C_2_Lessons
         {
             return 2 * MathF.PI * Radius;
         }
+
+        public bool Intersects(Rectangle rectangle) => rectangle.Intersects(this);
+        public bool Intersects(Circle circle) =>
+            MathF.Pow(MathF.Pow(MathF.Abs(PositionX - circle.PositionX), 2) + MathF.Pow(MathF.Abs(PositionY - circle.PositionY), 2), 0.5f) <= Radius + circle.Radius;
         public override bool Equals(object? obj)
         {
             if (obj == null) return false;
@@ -31,7 +35,7 @@ namespace C_2_Lessons
         }
 
         /// <summary>
-        /// It may look like a diamond, but if you look very closely, you will se that i don't have patience to make it round
+        /// Don't ask how i did it, it works, i'm proud of it. It has some inaccuracies, but leave them there. It looks nice
         /// </summary>
         /// <returns></returns>
         public override string ToString()
@@ -39,14 +43,14 @@ namespace C_2_Lessons
             var str = "";
             for (int i = 0; i < Radius; i++)
             {
-                var bef = (int)MathF.Round(Radius * 2 - (MathF.Cos(MathF.Asin((Radius - i) / Radius)) * Radius*1.8f));
-                var middle = (int)MathF.Round(2 * (MathF.Cos(MathF.Asin((Radius - i) / Radius)) * Radius *1.1f));
-                str += new string(' ', bef) + new string('*', (int)MathF.Round((Radius*2)-(bef/2)-middle/2)) + new string(' ', (int)MathF.Round(middle*2f)) + new string('*', (int)MathF.Round((Radius * 2) - (bef / 2) - middle / 2)) + "\n";
+                var bef = (int)MathF.Round(Radius * 2 - (MathF.Cos(MathF.Asin((Radius - i) / Radius)) * Radius * 1.8f));
+                var middle = (int)MathF.Round(2 * (MathF.Cos(MathF.Asin((Radius - i) / Radius)) * Radius));
+                str += new string(' ', bef) + new string('*', (int)MathF.Round((Radius * 2) - (bef / 2) - middle / 2)) + new string(' ', (int)MathF.Round(middle * 2f)) + new string('*', (int)MathF.Round((Radius * 2) - (bef / 2) - middle / 2)) + "\n";
             }
             for (int i = (int)Radius; i >= 0; i--)
             {
-                var bef = (int)MathF.Round(Radius * 2 - (MathF.Cos(MathF.Asin((Radius - i) / Radius)) * Radius *1.8f));
-                var middle = (int)MathF.Round(2 * (MathF.Cos(MathF.Asin((Radius - i) / Radius)) * Radius*1.1f ));
+                var bef = (int)MathF.Round(Radius * 2 - (MathF.Cos(MathF.Asin((Radius - i) / Radius)) * Radius * 1.8f));
+                var middle = (int)MathF.Round(2 * (MathF.Cos(MathF.Asin((Radius - i) / Radius)) * Radius));
                 str += new string(' ', bef) + new string('*', (int)MathF.Round((Radius * 2) - (bef / 2) - middle / 2)) + new string(' ', (int)MathF.Round(middle * 2f)) + new string('*', (int)MathF.Round((Radius * 2) - (bef / 2) - middle / 2)) + "\n";
             }
             return str;

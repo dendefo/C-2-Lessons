@@ -6,7 +6,7 @@
         static void Main(string[] args)
         {
             
-            Circle triangle = new(5,5,10);
+            Circle triangle = new(5,5,15);
             Console.WriteLine(triangle);
 
             

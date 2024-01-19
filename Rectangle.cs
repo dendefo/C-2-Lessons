@@ -22,18 +22,14 @@ namespace C_2_Lessons
                 new float[2]{PositionX-(Width/2),PositionY-(Height/2) }, new float[2]{PositionX-(Width/2),PositionY+(Height/2)},
                 new float[2]{PositionX+(Width/2),PositionY+(Height/2) }, new float[2]{PositionX+(Width/2),PositionY-(Height/2)}
             };
-        public bool Intesects(Circle circle)
+        public bool Intersects(Circle circle)
         {
             //First of all check if side of rectangle is overlaying the circle (or circle is inside the rectangle)
             float[][] corns = Corners();
-            if (circle.PositionX - circle.Width <= corns[3][0] && circle.PositionX - circle.Width >= corns[2][0] &&
-                circle.PositionY <= corns[3][1] && circle.PositionY >= corns[4][1]) return true;
-            else if (circle.PositionX + circle.Width <= corns[3][0] && circle.PositionX + circle.Width >= corns[2][0] &&
-                circle.PositionY <= corns[3][1] && circle.PositionY >= corns[4][1]) return true;
-            else if (circle.PositionY + circle.Height <= corns[3][1] && circle.PositionY + circle.Height >= corns[4][1] &&
-                circle.PositionX <= corns[3][0] && circle.PositionX >= corns[2][0]) return true;
-            else if (circle.PositionY - circle.Height <= corns[3][1] && circle.PositionY - circle.Height >= corns[4][1] &&
-                circle.PositionX <= corns[3][0] && circle.PositionX >= corns[2][0]) return true;
+            if (IsPointInside(circle.PositionX - circle.Width, circle.PositionY, corns)) return true;
+            else if (IsPointInside(circle.PositionX + circle.Width, circle.PositionY, corns)) return true;
+            else if (IsPointInside(circle.PositionX, circle.PositionY + Height, corns)) return true;
+            else if (IsPointInside(circle.PositionX, circle.PositionY - Height, corns)) return true;
 
             //Check if corner of rectangle isn't inside of circle (or laying on it)
             foreach (var c in corns)
@@ -43,6 +39,35 @@ namespace C_2_Lessons
             return false;
         }
 
+        private bool IsPointInside(float x, float y, float[][] corns)
+        {
+            return (x <= corns[3][0] && x >= corns[2][0] &&
+                y <= corns[3][1] && y >= corns[4][1]);
+        }
+
+
+        public bool Intersects(Rectangle rect)
+        {
+            var corns = Corners();
+            var rectCorns = rect.Corners();
+            //First i check if corners of first rectangle are outside of the second one
+            foreach (var point in rectCorns)
+            {
+                if (IsPointInside(point[0], point[1], corns)) return true;
+            }
+            //And then i check the reverse (there is a situations where they have different size and i need to check it twice)
+            foreach(var point in corns)
+            {
+                if (IsPointInside(point[0], point[1], rectCorns)) return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// So far easiest one
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             var str = "╔" + new string('═', (int)Width * 2) + "╗\n";
