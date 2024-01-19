@@ -21,13 +21,24 @@ namespace C_2_Lessons
         }
         public int PokerChips { get; private set; } //Yes, Poker Chips is my resources 
 
-        public bool isDead => Units.All(unit=>unit.IsDead);
+        public bool isDead => Units.All(unit => unit.IsDead);
         //Random unit of this trainer attacks random unit from enemy
         public void Attack(Trainer enemy)
         {
             var AliveUnits = Units.Where(unit => !unit.IsDead).ToList();
             var EnemyAliveUnits = enemy.Units.Where(unit => !unit.IsDead).ToList();
-            AliveUnits[Random.Shared.Next(0, AliveUnits.Count - 1)].Attack(EnemyAliveUnits[Random.Shared.Next(0, EnemyAliveUnits.Count - 1)]);
+            var Attacker = AliveUnits[Random.Shared.Next(0, AliveUnits.Count - 1)];
+            var Defender = EnemyAliveUnits[Random.Shared.Next(0, EnemyAliveUnits.Count - 1)];
+
+            Console.Write($"{Attacker} attacked {Defender} and dealt him ");
+            Attacker.Attack(Defender);
+            Console.WriteLine(" damage");
+
+            if (Defender.IsDead && !Attacker.IsDead) Console.WriteLine($"{Attacker} have killed the {Defender}");
+            else if (Defender.IsDead && Attacker.IsDead) Console.WriteLine($"{Attacker} and {Defender} both died. " +
+                $"Nobody will remember their heroic act, and in couple years their names will be gone from people's memory. " +
+                $"They never knew why they fight and they'll never know");
+            else if (Attacker.IsDead) Console.WriteLine($"Somehow {Attacker} just died, while attacking, good job {Defender}");
         }
         public Trainer(Races race, int amountOfUnits)
         {
@@ -65,6 +76,21 @@ namespace C_2_Lessons
                 }
 
             }
+        }
+
+        public override string ToString()
+        {
+            return race.ToString();
+        }
+
+        public int TakeResources(Trainer trainer)
+        {
+            int res = 0;
+            Units.Where(unit => !unit.IsDead).ToList().ForEach(unit => res += unit.CarryingCapacity);
+            int stolen =  Math.Min(res,trainer.PokerChips);
+            trainer.PokerChips -= stolen;
+            PokerChips += stolen;
+            return stolen;
         }
     }
 }

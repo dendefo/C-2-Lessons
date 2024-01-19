@@ -31,12 +31,14 @@ namespace C_2_Lessons
             {
                 value += Random.Shared.Next(1, (int)BaseDie + 1);
             }
-
-            return value + (int)Modifier;
+            value += Modifier;
+            Console.Write($" ({this} => {value})  "); 
+            //It may looks like value is bigger that actual damage, but it's because i print only the true damage to units.
+            return value;
         }
         public override string ToString()
         {
-            return $"{Scalar}d{BaseDie}"+(Modifier>=0?"+":"")+Modifier;
+            return $"{Scalar}d{BaseDie}" + (Modifier >= 0 ? "+" : "") + Modifier;
         }
 
         public override bool Equals([NotNullWhen(true)] object? obj)

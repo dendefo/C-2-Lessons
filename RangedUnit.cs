@@ -12,12 +12,17 @@ namespace C_2_Lessons
 
         public override void Attack(Unit unit)
         {
-            if ((float)Random.Shared.NextDouble() > Accuracy) return;
+            var color = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" (Rolling for Accuracy) ");
+            if (HitChance.Roll() > Accuracy*100) { Console.ForegroundColor = color; Console.Write(0); return; }
+            Console.ForegroundColor = color;
             base.Attack(unit);
         }
-        public RangedUnit(int damage, int hp, float accuracy) : base(new Dice(1,20,damage), hp)
+        public RangedUnit(int damage, int hp, float accuracy) : base(new Dice(1, 20, damage), hp)
         {
             Accuracy = accuracy;
+            HitChance = new(1, 100, -damage);
         }
     }
 }

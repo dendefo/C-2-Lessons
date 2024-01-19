@@ -4,6 +4,7 @@
     {
         public static int[] games = new int[9];
         public static int[] wins = new int[9];
+        const float weatherChangeChance = 0.5f;
 
         static void Main(string[] args)
         {
@@ -13,25 +14,80 @@
         static void BattleBetweenTrainers()
         {
             Weather weather = new Weather();
-            float weatherChangeChance = 0.3f;
-            Trainer inTheRedCorner = new(Races.Human, 5);
+
+            Console.ForegroundColor = ConsoleColor.Black;
+            //This is the place to play with some stuff, change races, add units. MAKE THEM FIGHT EACH OTHER
+            Trainer inTheRedCorner = new(Races.Elf, 5); 
             Trainer inTheBlueCorner = new(Races.Dwarf, 5);
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.White;
+            
+            Console.WriteLine($"WELCOME to another day at our kingdom of random!\nToday you will see as Trainer of {inTheRedCorner} " +
+                $"race in the red corner with {inTheRedCorner.Units.Count} soldiers and {inTheRedCorner.PokerChips} poker chips.\n" +
+                $"He will fight against Trainer of {inTheBlueCorner} " +
+                $"race in the blue corner that have {inTheBlueCorner.Units.Count} soldiers adn {inTheBlueCorner.PokerChips} poker chips!\n" +
+                $"May the best man/elf/dwarf win!");
+
             while (!inTheRedCorner.isDead && !inTheBlueCorner.isDead)
             {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Blue;
                 inTheBlueCorner.Attack(inTheRedCorner);
-                if (inTheRedCorner.isDead) break;
+
+                if (inTheRedCorner.isDead ||inTheBlueCorner.isDead) break;
+                
+                Console.ForegroundColor = ConsoleColor.Red;
                 inTheRedCorner.Attack(inTheBlueCorner);
                 if (Random.Shared.NextDouble()<weatherChangeChance)
                 {
                     weather++;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Weather has changed from {weather - 1} to {weather}");
                     inTheBlueCorner.Units.ForEach(unit => unit.WeatherEffect++);
                     inTheRedCorner.Units.ForEach(unit=> unit.WeatherEffect++);
                 }
+                
             }
-            if (inTheRedCorner.isDead) Console.WriteLine("The Winner is Blue!");
-            else Console.WriteLine("The Winner is Red!");
+            string WinnerName;
+            int takenRes = 0;
 
+            if (inTheRedCorner.isDead &&!inTheBlueCorner.isDead)
+            {
+                WinnerName = "Blue";
+                Console.ForegroundColor = ConsoleColor.Blue;
+                takenRes = inTheBlueCorner.TakeResources(inTheRedCorner);
+            }
+            else if (inTheBlueCorner.isDead&&!inTheRedCorner.isDead)
+            {
+                WinnerName = "Red";
+                Console.ForegroundColor = ConsoleColor.Red;
+                takenRes = inTheRedCorner.TakeResources(inTheBlueCorner);
+            }
+            else
+            {
+                //Some crazy edge case just happened when two humans fought each other and in the last battle there were two rogues,
+                //they killed each other so nobody won. WHAT ARE THE CHANCES
+                Console.WriteLine("Everybody died. Nobody won. What an irony, they fought for nothing in the end. Just endless dark nothing.\n" +
+                    "Was it worth it? It is not to us to decide. We are only spectators of this cruel world.");
+                return;
+            }
+
+            Console.WriteLine($"The Winner is {WinnerName}!");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"\nLet's take the moment and commemorate the heroes that fell in the battle. They have no name, but they had a purpose");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            inTheBlueCorner.Units.Where(unit => unit.IsDead).ToList().ForEach(unit => Console.WriteLine(unit));
+            Console.ForegroundColor = ConsoleColor.Red;
+            inTheRedCorner.Units.Where(unit => unit.IsDead).ToList().ForEach(unit => Console.WriteLine(unit));
+
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.WriteLine($"{WinnerName} won {takenRes} PokerChips and now have {(WinnerName == "Blue" ? inTheBlueCorner.PokerChips : inTheRedCorner.PokerChips)} PokerChips. Graz!");
         }
+
+
         /// <summary>
         /// A little battle simulation of units fighting each other in random pairs. Shows which class is in meta rn.
         /// </summary>

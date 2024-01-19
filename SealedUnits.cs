@@ -70,6 +70,7 @@
         {
             if (IsDead) return;
             base.Defend(unit);
+            Console.Write(" damage, but he threw his last dagger and also dealt ");
             if (IsDead) Attack(unit); //Last stab
         }
     }

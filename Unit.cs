@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace C_2_Lessons
@@ -37,8 +38,10 @@ namespace C_2_Lessons
             get { return _hp; }
             protected set
             {
-                if (value <= 0) _hp = 0;
+                var dmg = _hp - value;
+                if (value <= 0) { dmg = _hp; _hp = 0; }
                 else _hp = value;
+                if (dmg >= 0) Console.Write(dmg);
             }
         }
         public bool IsDead => HP == 0;
@@ -47,13 +50,32 @@ namespace C_2_Lessons
 
 
         public virtual void Attack(Unit unit) => unit.Defend(this);
-        protected virtual void Defend(Unit unit) => HP -= unit.Damage.Roll();
-        
+        protected virtual void Defend(Unit unit)
+        {
+            var color = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" (Rolling for damage) ");
+            var dmg = unit.Damage.Roll();
+            Console.ForegroundColor = color;
+            HP -= dmg;
+        }
+
 
         protected Unit(Dice damage, int hp)
         {
             Damage = damage;
             HP = hp;
+            CarryingCapacity = hp;
+        }
+
+        public override string ToString()
+        {
+            //Regex must have comment! It divides a string by Uppercase letter (UpperCase to Upper Case)
+            //Took the regex itself from here https://stackoverflow.com/questions/36147162/c-sharp-string-split-separate-string-by-uppercase
+            //Also by removing first 12 characters i removed the namespace name from the output.
+            //There is a lot of ways for doing it, but this one works just fine
+            var list = Regex.Split(base.ToString().Remove(0, 12), @"(?<!^)(?=[A-Z])");
+            return list[0] + " " + list[1];
         }
     }
     public enum Races
