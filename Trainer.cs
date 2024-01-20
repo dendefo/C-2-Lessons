@@ -47,36 +47,36 @@ namespace C_2_Lessons
             PokerChips = new Dice(20, 5, 0).Roll();
             for (int i = 0; i < amountOfUnits; i++)
             {
-                switch (race)
+                Units.Add(race switch
                 {
-                    case Races.Human:
-                        switch (Random.Shared.Next(0, 3))
-                        {
-                            case 0: Units.Add(new HumanMage()); break;
-                            case 1: Units.Add(new HumanRogue()); break;
-                            case 2: Units.Add(new HumanWarlock()); break;
-                        }
-                        break;
-                    case Races.Dwarf:
-                        switch (Random.Shared.Next(0, 3))
-                        {
-                            case 0: Units.Add(new DwarfHunter()); break;
-                            case 1: Units.Add(new DwarfPaladin()); break;
-                            case 2: Units.Add(new DwarfWarrior()); break;
-                        }
-                        break;
-                    case Races.Elf:
-                        switch (Random.Shared.Next(0, 3))
-                        {
-                            case 0: Units.Add(new ElfDruid()); break;
-                            case 1: Units.Add(new ElfPriest()); break;
-                            case 2: Units.Add(new ElfShaman()); break;
-                        }
-                        break;
-                }
+                    Races.Human =>
+                    Random.Shared.Next(0, 3) switch
+                    {
+                        0 => new HumanMage(),
+                        1 => new HumanRogue(),
+                        2 => new HumanWarlock(),
+                    },
 
+                    Races.Dwarf =>
+                    Random.Shared.Next(0, 3) switch
+                    {
+                        0 => new DwarfHunter(),
+                        1 => new DwarfPaladin(),
+                        2 => new DwarfWarrior(),
+                    },
+
+                    Races.Elf =>
+                    Random.Shared.Next(0, 3) switch
+                    {
+                        0 => new ElfDruid(),
+                        1 => new ElfPriest(),
+                        2 => new ElfShaman(),
+                    }
+                });
             }
+
         }
+
 
         public override string ToString()
         {
@@ -87,7 +87,7 @@ namespace C_2_Lessons
         {
             int res = 0;
             Units.Where(unit => !unit.IsDead).ToList().ForEach(unit => res += unit.CarryingCapacity);
-            int stolen =  Math.Min(res,trainer.PokerChips);
+            int stolen = Math.Min(res, trainer.PokerChips);
             trainer.PokerChips -= stolen;
             PokerChips += stolen;
             return stolen;
