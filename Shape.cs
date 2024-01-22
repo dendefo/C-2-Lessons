@@ -8,25 +8,10 @@ namespace C_2_Lessons
 {
     public abstract class Shape
     {
-        private float _positionX;
-        virtual public float PositionX { get { return _positionX; } protected set { _positionX = value; } }
-
-        private float _positionY;
-        virtual public float PositionY { get { return _positionY; } protected set { _positionY = value; } }
-
-        private float _width;
-        public float Width
-        {
-            get { return _width; }
-            protected set { _width = value; }
-        }
-
-        private float _height;
-        public float Height
-        {
-            get { return _height; }
-            protected set { _height = value; }
-        }
+        virtual public float PositionX { get; protected set; }
+        virtual public float PositionY { get; protected set; }
+        public float Width { get; protected set; }
+        public float Height { get; protected set; }
 
         abstract public float Area();
         abstract public float Perimeter();
@@ -37,10 +22,10 @@ namespace C_2_Lessons
         public Shape(float positionX, float positionY, float width, float height)
         {
             if (width < 0 || height < 0) throw new("Width or Height properties of the shape can not be negative");
-            _positionX = positionX;
-            _positionY = positionY;
-            _width = width;
-            _height = height;
+            PositionX = positionX;
+            PositionY = positionY;
+            Width = width;
+            Height = height;
         }
     }
 }

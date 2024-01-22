@@ -70,7 +70,7 @@ namespace C_2_Lessons
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return (int)(AngleABC * AngleABC * AngleBCA * AngleBCA * AngleBCA * PositionX * PositionY*287361);
+            return (int)(AngleABC * AngleABC * AngleBCA * AngleBCA * AngleBCA * PositionX * PositionY*287361); // 287361 is just a magic number
         }
     }
 }
