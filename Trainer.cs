@@ -44,7 +44,7 @@ namespace C_2_Lessons
         {
             Units = new();
             this.race = race;
-            PokerChips = new Dice(20, 5, 0).Roll();
+            PokerChips = new Dice(20, 5, 0).GetRandom();
             for (int i = 0; i < amountOfUnits; i++)
             {
                 Units.Add(race switch

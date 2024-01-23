@@ -14,8 +14,8 @@ namespace C_2_Lessons
     {
         public int CarryingCapacity;
 
-        public Dice HitChance;
-        public Dice DefenceRating;
+        protected IRandomProvider HitChance;
+        protected IRandomProvider DefenceRating;
 
         private Weather _weathereffect;
         public Weather WeatherEffect
@@ -30,7 +30,7 @@ namespace C_2_Lessons
         }
 
         public int IdInStatSystem { get; protected set; }
-        public virtual Dice Damage { get; protected set; }
+        public virtual IRandomProvider Damage { get; protected set; }
 
         private int _hp;
         public virtual int HP
@@ -55,13 +55,13 @@ namespace C_2_Lessons
             var color = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(" (Rolling for damage) ");
-            var dmg = unit.Damage.Roll();
+            var dmg = unit.Damage.GetRandom();
             Console.ForegroundColor = color;
             HP -= dmg;
         }
 
 
-        protected Unit(Dice damage, int hp)
+        protected Unit(IRandomProvider damage, int hp)
         {
             Damage = damage;
             HP = hp;

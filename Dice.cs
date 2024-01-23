@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace C_2_Lessons
 {
-    public struct Dice
+    public struct Dice : IRandomProvider
     {
         public uint Scalar { get; private set; } // controls how many die will roll
         public uint BaseDie { get; private set; } // controls the type of die rolled
-        public int Modifier { get; private set; } //ontrols an additive value added to the results
+        public int Modifier { get; set; } //ontrols an additive value added to the results
 
         public Dice(uint scalar, uint baseDie, int modifier)
         {
@@ -24,7 +24,7 @@ namespace C_2_Lessons
             Modifier = modifier;
         }
 
-        public int Roll()
+        public int GetRandom()
         {
             int value = 0;
             for (int i = 0; i < Scalar; i++)
@@ -32,7 +32,7 @@ namespace C_2_Lessons
                 value += Random.Shared.Next(1, (int)BaseDie + 1);
             }
             value += Modifier;
-            Console.Write($" ({this} => {value})  "); 
+            Console.Write($" ({this} => {value})  ");
             //It may looks like value is bigger that actual damage, but it's because i print only the true damage to units.
             return value;
         }

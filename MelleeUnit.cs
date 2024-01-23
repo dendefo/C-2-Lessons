@@ -14,23 +14,27 @@ namespace C_2_Lessons
             var color = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(" (Rolling for parrying) ");
-            if (DefenceRating.Roll() < ((double)ParryChance) * 100)
+            if (DefenceRating.GetRandom() < ((double)ParryChance) * 100)
             {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(" (Rolling for damage) ");
+                HP -= unit.Damage.GetRandom() / 2;
                 Console.ForegroundColor = color;
-                HP -= unit.Damage.Roll() / 2;
+
 
             }
             else
             {
-                Console.ForegroundColor = color;
                 base.Defend(unit);
+                Console.ForegroundColor = color;
+
             }
 
         }
         public MelleeUnit(int damage, int hp, float parryChance) : base(new Dice(1, 20, damage), hp)
         {
             ParryChance = parryChance;
-            DefenceRating = new(1, 100, -HP);
+            DefenceRating = new Dice(1, 100, -HP);
         }
     }
 }
