@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace C_2_Lessons
 {
-    internal class Circle : Shape
+    sealed internal class Circle : Shape
     {
         public float Radius { get; private set; }
         public Circle(float positionX, float positionY, float radius) : base(positionX, positionY, radius * 2, radius * 2)

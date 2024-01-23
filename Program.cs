@@ -5,9 +5,10 @@
 
         static void Main(string[] args)
         {
-            
-            Circle circle = new(5,5,19.7f);
+
+            Triangle circle = new(5,5,2.587f,5,60);
             Console.WriteLine(circle);
+            //Console.WriteLine(MathF.Tan(180/180*MathF.PI));
 
 
         }
