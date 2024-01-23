@@ -64,11 +64,7 @@ namespace C_2_Lessons
             return false;
         }
 
-        /// <summary>
-        /// So far easiest one
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
+        public override void Draw()
         {
             var str = "╔" + new string('═', (int)Width * 2) + "╗\n";
             for (int i = 0; i < Height; i++)
@@ -76,7 +72,16 @@ namespace C_2_Lessons
                 str += "║" + new string(' ', (int)Width * 2) + "║\n";
             }
             str += "╚" + new string('═', (int)Width * 2) + "╝\n";
-            return str;
+            Console.WriteLine(str);
+        }
+
+        /// <summary>
+        /// So far easiest one
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return base.ToString() +$", Height: {Height}, Width: {Width}";
         }
         public override bool Equals(object? obj)
         {

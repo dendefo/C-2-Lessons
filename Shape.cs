@@ -27,5 +27,9 @@ namespace C_2_Lessons
             Width = width;
             Height = height;
         }
+        public override string ToString()
+        {
+            return $"PositionX: {PositionX}, PositionY: {PositionY}";
+        }
     }
 }

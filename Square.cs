@@ -15,5 +15,9 @@ namespace C_2_Lessons
         public Square(float positionX, float positionY, float side) : base(positionX, positionY, side, side)
         {
         }
+        public override string ToString()
+        {
+            return $"PositionX: {PositionX}, PositionY: {PositionY}, Side: {Height}";
+        }
     }
 }

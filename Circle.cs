@@ -33,12 +33,7 @@ namespace C_2_Lessons
             if (obj is Circle c) return c.Radius == Radius && c.PositionX == PositionX && c.PositionY == PositionY;
             return false;
         }
-
-        /// <summary>
-        /// Don't ask how i did it, it works, i'm proud of it. It has some inaccuracies, but leave them there. It looks nice
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
+        public override void Draw()
         {
             var str = "";
             for (int i = 0; i < Radius; i++)
@@ -53,7 +48,16 @@ namespace C_2_Lessons
                 var middle = (int)MathF.Round(2 * (MathF.Cos(MathF.Asin((Radius - i) / Radius)) * Radius));
                 str += new string(' ', bef) + new string('*', (int)MathF.Round((Radius * 2) - (bef / 2) - middle / 2)) + new string(' ', (int)MathF.Round(middle * 2f)) + new string('*', (int)MathF.Round((Radius * 2) - (bef / 2) - middle / 2)) + "\n";
             }
-            return str;
+            Console.WriteLine(str);
+        }
+
+        /// <summary>
+        /// Don't ask how i did it, it works, i'm proud of it. It has some inaccuracies, but leave them there. It looks nice
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"PositionX: {PositionX}, PositionY: {PositionY}, Radius: {Radius}";
         }
     }
 }

@@ -62,7 +62,7 @@ namespace C_2_Lessons
         /// <returns></returns>
         public override string ToString()
         {
-            return $"PositionX: {PositionX}, PositionY: {PositionY}\nSides: {Side_a}, {Side_b}, {Side_c}\nAngles: {AngleABC}, {AngleBCA}, {AngleCAB}";
+            return base.ToString()+$"\nSides: {Side_a}, {Side_b}, {Side_c}\nAngles: {AngleABC}, {AngleBCA}, {AngleCAB}";
         }
 
         /// <summary>
