@@ -17,12 +17,12 @@
 
             Console.ForegroundColor = ConsoleColor.Black;
             //This is the place to play with some stuff, change races, add units. MAKE THEM FIGHT EACH OTHER
-            Trainer inTheRedCorner = new(Races.Elf, 5); 
+            Trainer inTheRedCorner = new(Races.Elf, 5);
             Trainer inTheBlueCorner = new(Races.Dwarf, 5);
             Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.White;
-            
+
             Console.WriteLine($"WELCOME to another day at our kingdom of random!\nToday you will see as Trainer of {inTheRedCorner} " +
                 $"race in the red corner with {inTheRedCorner.Units.Count} soldiers and {inTheRedCorner.PokerChips} poker chips.\n" +
                 $"He will fight against Trainer of {inTheBlueCorner} " +
@@ -35,30 +35,30 @@
                 Console.ForegroundColor = ConsoleColor.Blue;
                 inTheBlueCorner.Attack(inTheRedCorner);
 
-                if (inTheRedCorner.isDead ||inTheBlueCorner.isDead) break;
-                
+                if (inTheRedCorner.isDead || inTheBlueCorner.isDead) break;
+
                 Console.ForegroundColor = ConsoleColor.Red;
                 inTheRedCorner.Attack(inTheBlueCorner);
-                if (Random.Shared.NextDouble()<weatherChangeChance)
+                if (Random.Shared.NextDouble() < weatherChangeChance)
                 {
                     weather++;
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"Weather has changed from {weather - 1} to {weather}");
                     inTheBlueCorner.Units.ForEach(unit => unit.WeatherEffect++);
-                    inTheRedCorner.Units.ForEach(unit=> unit.WeatherEffect++);
+                    inTheRedCorner.Units.ForEach(unit => unit.WeatherEffect++);
                 }
-                
+
             }
             string WinnerName;
             int takenRes = 0;
 
-            if (inTheRedCorner.isDead &&!inTheBlueCorner.isDead)
+            if (inTheRedCorner.isDead && !inTheBlueCorner.isDead)
             {
                 WinnerName = "Blue";
                 Console.ForegroundColor = ConsoleColor.Blue;
                 takenRes = inTheBlueCorner.TakeResources(inTheRedCorner);
             }
-            else if (inTheBlueCorner.isDead&&!inTheRedCorner.isDead)
+            else if (inTheBlueCorner.isDead && !inTheRedCorner.isDead)
             {
                 WinnerName = "Red";
                 Console.ForegroundColor = ConsoleColor.Red;
