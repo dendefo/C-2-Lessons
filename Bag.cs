@@ -16,15 +16,22 @@ namespace C_2_Lessons
         public int GetRandom()
         {
             int value = fromMinToMax[Random.Shared.Next(0, fromMinToMax.Count)] + Modifier;
+            fromMinToMax.Remove(value - Modifier);
+            if (fromMinToMax.Count == 0) Fill();
             Console.Write($" number from {Minimum} to {Maximum}  ");
             return value;
         }
-        public Bag(int min, int max,int mod)
+        private void Fill()
         {
-            Minimum = min; 
+            //https://stackoverflow.com/questions/4926362/easier-way-to-populate-a-list-with-integers-in-net
+            fromMinToMax = Enumerable.Range(Minimum, Maximum).ToList();
+        }
+        public Bag(int min, int max, int mod)
+        {
+            Minimum = min;
             Maximum = max;
             Modifier = mod;
-            fromMinToMax = Enumerable.Range(min, max).ToList(); //https://stackoverflow.com/questions/4926362/easier-way-to-populate-a-list-with-integers-in-net
+            Fill();
         }
     }
 }
