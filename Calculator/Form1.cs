@@ -183,7 +183,7 @@ namespace Calculator
 
         private void Percent_Click(object sender, EventArgs e)
         {
-            MathAction = (a, b) => a * b / 10000;
+            MathAction = (a, b) => a * b / 100;
             Print();
         }
         #endregion
