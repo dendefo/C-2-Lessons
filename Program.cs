@@ -19,18 +19,20 @@
             tree.AddNode(node.Children[0], new Elf("Amras",10));
             tree.AddNode(node.Children[1], new Elf("Fingon",11));
             tree.AddNode(node.Children[1], new Elf("Turgon",12));
-            tree.AddNode(node.Children[2], new Elf("Finrod",13));
-            tree.AddNode(node.Children[2], new Elf("Orodreth",14));
-            tree.AddNode(node.Children[2], new Elf("Angrod",15));
-            tree.AddNode(node.Children[2], new Elf("Aegnor",16));
-            tree.AddNode(node.Children[2], new Elf("Galadriel",17));
-            tree.AddNode(node.Children[0].Children[4], new Elf("Celebrimbor",18));
-            tree.AddNode(node.Children[1].Children[0], new Elf("Gil Galad",19));
-            tree.AddNode(node.Children[1].Children[1], new Elf("Idril",20));
-            tree.AddNode(node.Children[2].Children[1], new Elf("Findulas",21));
-            tree.AddNode(node.Children[1].Children[1].Children[0], new Elf("Earendil",22));
-            tree.AddNode(node.Children[1].Children[1].Children[0].Children[0], new Elf("Elros",23));
-            tree.AddNode(node.Children[1].Children[1].Children[0].Children[0], new Elf("Elrond",24));
+            tree.AddNode(node.Children[1], new Elf("Aredhel",13));
+            tree.AddNode(node.Children[2], new Elf("Finrod",14));
+            tree.AddNode(node.Children[2], new Elf("Orodreth",15));
+            tree.AddNode(node.Children[2], new Elf("Angrod",16));
+            tree.AddNode(node.Children[2], new Elf("Aegnor",17));
+            tree.AddNode(node.Children[2], new Elf("Galadriel",18));
+            tree.AddNode(node.Children[0].Children[4], new Elf("Celebrimbor",19));
+            tree.AddNode(node.Children[1].Children[0], new Elf("Gil Galad",20));
+            tree.AddNode(node.Children[1].Children[1], new Elf("Idril",21));
+            tree.AddNode(node.Children[1].Children[2], new Elf("Maeglin",22));
+            tree.AddNode(node.Children[2].Children[1], new Elf("Findulas",23));
+            tree.AddNode(node.Children[1].Children[1].Children[0], new Elf("Earendil",24));
+            tree.AddNode(node.Children[1].Children[1].Children[0].Children[0], new Elf("Elros",25));
+            tree.AddNode(node.Children[1].Children[1].Children[0].Children[0], new Elf("Elrond",26));
             Console.WriteLine("Iterating through the tree by Breadth:\n__________________________________");
             foreach (var i in tree)
             {
