@@ -7,50 +7,42 @@ using System.Threading.Tasks;
 
 namespace C_2_Lessons
 {
-    public struct Dice
+    abstract public class Dice<T> where T : IComparable<T>
     {
         public uint Scalar { get; private set; } // controls how many die will roll
         public uint BaseDie { get; private set; } // controls the type of die rolled
-        public int Modifier { get; private set; } //ontrols an additive value added to the results
+        public T Modifier { get; private set; } //ontrols an additive value added to the results
 
-        public Dice(uint scalar, uint baseDie, int modifier)
+        public Dice(uint scalar, uint baseDie, T modifier)
         {
             Scalar = scalar;
             BaseDie = baseDie;
             Modifier = modifier;
         }
-        public void ChangeModifier(int modifier)
+        public void ChangeModifier(T modifier)
         {
             Modifier = modifier;
         }
 
-        public int Roll()
+        abstract public T Roll();
+
+    }
+    public class IntegerDice : Dice<int>
+    {
+        public IntegerDice(uint scalar, uint baseDie, int modifier) : base(scalar, baseDie, modifier) { }
+
+        public override int Roll()
         {
             int value = 0;
             for (int i = 0; i < Scalar; i++)
             {
-                value += Random.Shared.Next(1, (int)BaseDie + 1);
+                value += new Random().Next(1, (int)BaseDie + 1);
             }
-            value += Modifier;
-            Console.Write($" ({this} => {value})  "); 
-            //It may looks like value is bigger that actual damage, but it's because i print only the true damage to units.
-            return value;
+            return value + Modifier;
         }
         public override string ToString()
         {
             return $"{Scalar}d{BaseDie}" + (Modifier >= 0 ? "+" : "") + Modifier;
         }
-
-        public override bool Equals([NotNullWhen(true)] object? obj)
-        {
-            if (obj == null) return false;
-            Dice dObj = (Dice)obj;
-            return Scalar == dObj.Scalar && BaseDie == dObj.BaseDie && Modifier == dObj.Modifier;
-        }
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
     }
 }
