@@ -39,7 +39,7 @@
             tree.SetIterationMethod(true);
 
             var enumerator = ((IEnumerable<TreeNode<Elf>>)tree).GetEnumerator();
-            Console.WriteLine("\nIterating through the tree by Width:\n__________________________________");
+            Console.WriteLine("\nIterating through the tree by Depth:\n__________________________________");
             while (enumerator.MoveNext())
             {
                 Console.Write(new string(' ',((TreeDepthEnumerator<TreeNode<Elf>, Elf>)(enumerator)).DepthLevel*2));
