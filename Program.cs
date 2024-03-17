@@ -1,54 +1,68 @@
-﻿namespace C_2_Lessons
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace C_2_Lessons
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+            string path = Path.GetDirectoryName(typeof(Program).Assembly.Location);
+            path = Directory.GetParent(path).Parent.Parent.FullName;
+            var text = File.ReadAllText(path+"\\Noldor.json");
+            ElfJsonData data = JsonSerializer.Deserialize<ElfJsonData>(text);
+
+            //Moved Data into a JSon, and now i'm reading it from there
+            //Divide Data and Logic!
+
             Console.WriteLine("Family Tree of Noldor. The Visualization is placed is in root-folder/TreeVisualization.png\n\n");
-            TreeStructure<Elf> tree = new TreeStructure<Elf>(new Elf("Finwe",0));
-            TreeNode<Elf> node = tree.Root;
-            tree.AddNode(node, new Elf("Feanor",1));
-            tree.AddNode(node, new Elf("Fingolfin",2));
-            tree.AddNode(node, new Elf("Finarfin",3));
-            tree.AddNode(node.Children[0], new Elf("Maedros",4));
-            tree.AddNode(node.Children[0], new Elf("Maglor",5));
-            tree.AddNode(node.Children[0], new Elf("Celegorm",6));
-            tree.AddNode(node.Children[0], new Elf("Carantihir",7));
-            tree.AddNode(node.Children[0], new Elf("Curufin",8));
-            tree.AddNode(node.Children[0], new Elf("Amrod",9));
-            tree.AddNode(node.Children[0], new Elf("Amras",10));
-            tree.AddNode(node.Children[1], new Elf("Fingon",11));
-            tree.AddNode(node.Children[1], new Elf("Turgon",12));
-            tree.AddNode(node.Children[1], new Elf("Aredhel",13));
-            tree.AddNode(node.Children[2], new Elf("Finrod",14));
-            tree.AddNode(node.Children[2], new Elf("Orodreth",15));
-            tree.AddNode(node.Children[2], new Elf("Angrod",16));
-            tree.AddNode(node.Children[2], new Elf("Aegnor",17));
-            tree.AddNode(node.Children[2], new Elf("Galadriel",18));
-            tree.AddNode(node.Children[0].Children[4], new Elf("Celebrimbor",19));
-            tree.AddNode(node.Children[1].Children[0], new Elf("Gil Galad",20));
-            tree.AddNode(node.Children[1].Children[1], new Elf("Idril",21));
-            tree.AddNode(node.Children[1].Children[2], new Elf("Maeglin",22));
-            tree.AddNode(node.Children[2].Children[1], new Elf("Findulas",23));
-            tree.AddNode(node.Children[1].Children[1].Children[0], new Elf("Earendil",24));
-            tree.AddNode(node.Children[1].Children[1].Children[0].Children[0], new Elf("Elros",25));
-            tree.AddNode(node.Children[1].Children[1].Children[0].Children[0], new Elf("Elrond",26));
+
+
+            TreeStructure<Elf> tree = new TreeStructure<Elf>(new Elf(data.root));
+            foreach (var i in data.nodes)
+            {
+                tree.AddNode(x=>x.Data.Name == i.parentName, new Elf(i.name));
+            }
+
+
+            Breadth(tree);
+            Depth(tree);
+            
+            Console.WriteLine("\n\nSorted By name:\n_______________________");
+            tree.OrderBy(x => x.Data.Name).ToList().ForEach(x => Console.WriteLine(x.ID+" "+x));
+
+            Console.WriteLine("\n\nSorted By name length:\n_______________________");
+            tree.OrderBy(x => x.Data.Name.Length).ThenBy(x => x.Data.Name).ToList().ForEach(x => Console.WriteLine(x.ID + " " + x));
+        }
+        static void Breadth(TreeStructure<Elf> tree)
+        {
+            tree.SetIterationMethod(false);
             Console.WriteLine("Iterating through the tree by Breadth:\n__________________________________");
             foreach (var i in tree)
             {
-                Console.WriteLine(i);
+                Console.WriteLine(i.ID+" "+i);
             }
+        }
+        static void Depth(TreeStructure<Elf> tree)
+        {
             tree.SetIterationMethod(true);
-
             var enumerator = ((IEnumerable<TreeNode<Elf>>)tree).GetEnumerator();
             Console.WriteLine("\nIterating through the tree by Depth:\n__________________________________");
             while (enumerator.MoveNext())
             {
-                Console.Write(new string(' ',((TreeDepthEnumerator<TreeNode<Elf>, Elf>)(enumerator)).DepthLevel*2));
+                Console.Write(new string(' ', ((TreeDepthEnumerator<TreeNode<Elf>, Elf>)(enumerator)).DepthLevel * 2));
                 Console.WriteLine(enumerator.Current);
             }
-            Console.WriteLine("\n\nSorted By name:\n_______________________");
-            tree.OrderBy(x => x.Data.Name).ToList().ForEach(x =>Console.WriteLine(x));
         }
+    }
+    class ElfJsonData
+    {
+        public string root { get; set; }
+        public IList<NodeData> nodes { get; set; }
+    }
+    class NodeData
+    {
+        public string name { get; set; }
+        public string parentName { get; set; }
     }
 }

@@ -13,12 +13,20 @@ namespace C_2_Lessons
         public TreeNode<T> Root { get; set; }
         public TreeStructure(T data)
         {
-            Root = new TreeNode<T>(data, null);
+            Root = new TreeNode<T>(data, null, 0);
         }
         public void AddNode(TreeNode<T> parent, T data)
         {
-            TreeNode<T> node = new TreeNode<T>(data, parent);
+            uint id = this.Max(x => x.ID);
+            TreeNode<T> node = new TreeNode<T>(data, parent, id + 1);
             parent.Children.Add(node);
+        }
+        public uint AddNode(Func<TreeNode<T>, bool> predicate, T data)
+        {
+            var parent = this.First(predicate);
+            uint id = this.Max(x => x.ID);
+            parent.Children.Add(new(data, parent, id + 1));
+            return id + 1;
         }
         public void RemoveNode(TreeNode<T> node)
         {
@@ -48,14 +56,16 @@ namespace C_2_Lessons
     }
     public class TreeNode<T>
     {
+        public uint ID { get; private set; }
         public T Data { get; set; }
         public TreeNode<T> Parent { get; private set; }
         public List<TreeNode<T>> Children { get; set; }
-        public TreeNode(T data, TreeNode<T> parent)
+        public TreeNode(T data, TreeNode<T> parent, uint iD)
         {
             Parent = parent;
             Data = data;
             Children = new List<TreeNode<T>>();
+            ID = iD;
         }
         public override string ToString()
         {

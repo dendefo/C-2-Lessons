@@ -1,0 +1,109 @@
+﻿{
+  "root": "Finwe",
+    "nodes": [
+        {
+            "name": "Feanor",
+            "parentName": "Finwe"
+        },
+        {
+            "name": "Fingolfin",
+            "parentName": "Finwe"
+        },
+        {
+            "name": "Finarfin",
+            "parentName": "Finwe"
+        },
+        {
+            "name": "Maedros",
+            "parentName": "Feanor"
+        },
+        {
+            "name": "Maglor",
+            "parentName": "Feanor"
+        },
+        {
+            "name": "Celegorm",
+            "parentName": "Feanor"
+        },
+        {
+            "name": "Carantihir",
+            "parentName": "Feanor"
+        },
+        {
+            "name": "Curufin",
+            "parentName": "Feanor"
+        },
+        {
+            "name": "Amrod",
+            "parentName": "Feanor"
+        },
+        {
+            "name": "Amras",
+            "parentName": "Feanor"
+        },
+        {
+            "name": "Fingon",
+            "parentName": "Fingolfin"
+        },
+        {
+            "name": "Turgon",
+            "parentName": "Fingolfin"
+        },
+        {
+            "name": "Aredhel",
+            "parentName": "Fingolfin"
+        },
+        {
+            "name": "Finrod",
+            "parentName": "Finarfin"
+        },
+        {
+            "name": "Orodreth",
+            "parentName": "Finarfin"
+        },
+        {
+            "name": "Angrod",
+            "parentName": "Finarfin"
+        },
+        {
+            "name": "Aegnor",
+            "parentName": "Finarfin"
+        },
+        {
+            "name": "Galadriel",
+            "parentName": "Finarfin"
+        },
+        {
+            "name": "Celebrimbor",
+            "parentName": "Curufin"
+        },
+        {
+            "name": "Gil-Galad",
+            "parentName": "Fingon"
+        },
+        {
+            "name": "Idril",
+            "parentName": "Turgon"
+        },
+        {
+            "name": "Maeglin",
+            "parentName": "Aredhel"
+        },
+        {
+            "name": "Finduilas",
+            "parentName": "Orodreth"
+        },
+        {
+            "name": "Earendil",
+            "parentName": "Idril"
+        },
+        {
+            "name": "Elros",
+            "parentName": "Earendil"
+        },
+        {
+            "name": "Elrond",
+            "parentName": "Earendil"
+        }
+    ]
+}

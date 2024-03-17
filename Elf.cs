@@ -6,18 +6,16 @@ using System.Threading.Tasks;
 
 namespace C_2_Lessons
 {
-    public struct Elf
+    public class Elf
     {
         public string Name { get; private set; }
-        public int ID { get; private set; }
-        public Elf(string name, int Id)
+        public Elf(string name)
         {
             Name = name;
-            ID = Id;
         }
         public override string ToString()
         {
-            return ID + " " + Name;
+            return Name;
         }
     }
 }
